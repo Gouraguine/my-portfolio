@@ -1,0 +1,22 @@
+{
+  "stagiaires": [
+    {
+      "id": 1,
+      "nom": "SALIM",
+      "prenom": "GOURAGUINE",
+      "filiere": "Dev"
+    },
+    {
+      "id": 2,
+      "nom": "MOUAD",
+      "prenom": "HADDAD",
+      "filiere": "Reseaux"
+    },
+    {
+      "id": "3",
+      "nom": "ALI",
+      "prenom": "CHEMSI",
+      "filiere": "gestion"
+    }
+  ]
+}
