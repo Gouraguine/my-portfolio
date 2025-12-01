@@ -23,78 +23,219 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #021018; /* Background color */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow effect */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
-  border-radius: 8px; /* Rounded corners */
+  padding: 12px 20px;
+  background-color: #021018;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 0; /* Remove border radius for navbar */
+  position: relative;
+  z-index: 100;
 }
 
 .site-nav:hover {
-  background-color: #030d15; /* Darker background on hover */
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); /* Enhanced shadow on hover */
+  background-color: #030d15;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
 }
 
 .logo {
-  color: #00aaff; /* Logo color */
+  color: #00aaff;
   font-size: 1.5rem;
-  transition: transform 0.3s ease; /* Logo animation */
+  font-weight: 700;
+  transition: transform 0.3s ease;
+  z-index: 101;
 }
 
 .logo:hover {
-  transform: scale(1.05); /* Slightly enlarge logo on hover */
+  transform: scale(1.05);
 }
 
 .nav-links {
   display: flex;
   gap: 20px;
-  transition: opacity 0.3s ease; /* Smooth transition for links */
+  align-items: center;
+  transition: opacity 0.3s ease;
 }
 
 .nav-link {
-  box-shadow: 0 2px 8px rgba(0, 170, 255, 0.3);
-  color: #ffffff; /* Link color */
+  color: #ffffff;
   text-decoration: none;
-  position: relative; /* For pseudo-element */
-  padding: 8px 12px; /* Padding for better click area */
-  border-radius: 5px; /* Rounded corners for links */
-  transition: background-color 0.3s ease; /* Smooth transition for background */
+  position: relative;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 170, 255, 0.1);
 }
 
 .nav-link:hover {
+  background-color: rgba(0, 170, 255, 0.15);
   box-shadow: 0 2px 8px rgba(0, 170, 255, 0.3);
-  background-color: rgba(0, 170, 255, 0.1); /* Light blue background on hover */
 }
 
 .nav-link::after {
   content: '';
   display: block;
   height: 2px;
-  background: #00aaff; /* Underline color */
+  background: #00aaff;
   width: 0;
-  transition: width 0.3s ease; /* Smooth transition for underline */
+  transition: width 0.3s ease;
   position: absolute;
   left: 0;
-  bottom: -5px; /* Position below the link */
+  bottom: -5px;
 }
 
 .nav-link:hover::after {
-  width: 100%; /* Expand underline on hover */
+  width: 100%;
 }
 
-/* Mobile menu toggle button */
+.nav-link.active {
+  background: rgba(0, 170, 255, 0.2);
+  color: #00ffff;
+}
+
+/* Mobile menu toggle button with hamburger animation */
 .menu-toggle {
-  display: none; /* Hidden by default */
-  font-size: 1.5rem;
-  background: none;
+  display: none;
+  width: 40px;
+  height: 36px;
+  background: transparent;
   border: none;
-  color: #ffffff; /* Button color */
   cursor: pointer;
-  transition: transform 0.3s ease; /* Animation for button */
+  position: relative;
+  z-index: 101;
+  padding: 4px;
 }
 
-.menu-toggle:hover {
-  transform: scale(1.1); /* Slightly enlarge button on hover */
+.menu-toggle .hamburger,
+.menu-toggle .hamburger::before,
+.menu-toggle .hamburger::after {
+  display: block;
+  background: #ffffff;
+  height: 2.5px;
+  border-radius: 3px;
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
+}
+
+.menu-toggle .hamburger {
+  width: 22px;
+  margin: 6px auto;
+  position: relative;
+}
+
+.menu-toggle .hamburger::before,
+.menu-toggle .hamburger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 22px;
+}
+
+.menu-toggle .hamburger::before {
+  top: -7px;
+}
+
+.menu-toggle .hamburger::after {
+  bottom: -7px;
+}
+
+.menu-toggle:hover .hamburger,
+.menu-toggle:hover .hamburger::before,
+.menu-toggle:hover .hamburger::after {
+  background: #00aaff;
+}
+
+/* open state -> X */
+.menu-toggle.open .hamburger {
+  transform: rotate(45deg);
+  background: #00aaff;
+}
+
+.menu-toggle.open .hamburger::before {
+  transform: rotate(-90deg) translateX(8px);
+  top: 0;
+  background: #00aaff;
+}
+
+.menu-toggle.open .hamburger::after {
+  opacity: 0;
+  background: #00aaff;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+  .site-nav {
+    padding: 12px 16px;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 8px;
+    right: 8px;
+    background: rgba(2, 16, 24, 0.98);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 12px 0;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 0 18px 50px rgba(0, 6, 20, 0.7);
+    border: 1px solid rgba(0, 170, 255, 0.1);
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(-12px);
+    transition: max-height 0.35s ease, opacity 0.3s ease, transform 0.35s ease;
+    z-index: 99;
+  }
+
+  .nav-links.open {
+    max-height: 300px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .nav-link {
+    padding: 12px 16px;
+    margin: 0;
+    width: 100%;
+    text-align: left;
+    border-radius: 8px;
+  }
+
+  .nav-link::after {
+    display: none;
+  }
+
+  .nav-link:hover {
+    background-color: rgba(0, 170, 255, 0.2);
+  }
+}
+
+@media (max-width: 520px) {
+  .site-nav {
+    padding: 12px 12px;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .nav-links {
+    left: 4px;
+    right: 4px;
+  }
+
+  .nav-link {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
 }
 
 /* About section */
@@ -393,265 +534,113 @@ section {
   font-size: 0.95rem;
 }
 
-/* Home hero layout with photo on the right */
+/* Home / Hero: place image close to text and responsive */
 .home-hero {
-  display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: 36px;
-  align-items: center;
-  padding: 80px 20px;
-  max-width: 1200px;
-  margin: 0 auto 40px;
-  animation: fadeIn 1s ease; /* Animation for the hero section */
-}
-
-/* Centre le hero et l'image au milieu de la page */
-.hero,
-.home-hero {
-  min-height: calc(100vh - 100px); /* occupe presque toute la hauteur du viewport */
   display: flex;
-  align-items: center;    /* centre verticalement */
-  justify-content: center;/* centre horizontalement */
-  padding: 40px 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  min-height: calc(100vh - 90px);
 }
 
-/* conteneur interne centré */
 .hero-inner {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
   display: flex;
-  flex-direction: column;
-  align-items: center;    /* centre le contenu (titre, sous-titre, boutons) */
-  justify-content: center;
-  text-align: center;
-  gap: 18px;
+  align-items: center;
+  gap: 32px;          /* space between text and image */
+  width: 100%;
+  max-width: 1100px;
+  padding: 8px;
 }
 
-/* cadre photo centré */
-.photo-frame {
-  margin: 0 auto;
+.hero-left {
+  flex: 1 1 540px;
+  min-width: 220px;
+  text-align: left;
+}
+
+.hero-right {
+  flex: 0 0 360px;    /* keeps image near text */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* taille et comportement de l'image */
-.profile-img,
-.project-image {
+/* image style + blue shadow */
+.profile-img {
   width: 100%;
-  max-width: 360px;      /* change si vous voulez plus grand */
+  max-width: 360px;
   height: auto;
-  max-height: 420px;
   object-fit: cover;
   border-radius: 14px;
-  display: block;
-}
-
-/* responsive : réduit la hauteur pour petits écrans */
-@media (max-width: 880px) {
-  .hero,
-  .home-hero {
-    min-height: auto;
-    padding: 36px 16px;
-  }
-
-  .profile-img,
-  .project-image {
-    max-width: 100%;
-    max-height: 320px;
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .projects {
-    padding: 40px 16px;
-  }
-
-  .projects-grid {
-    gap: 15px;
-  }
-
-  .project-card {
-    padding: 15px;
-  }
-
-  .project-title {
-    font-size: 1.3rem;
-  }
-
-  .project-description {
-    font-size: 0.9rem;
-  }
-
-  .tech-badge {
-    font-size: 0.8rem;
-  }
-}
-
-/* Contact section styles */
-.contact {
-  padding: 60px 20px;
-  max-width: 800px;
-  margin: 0 auto;
-  animation: sectionFade 0.9s ease both;
-}
-
-.contact-title {
-  font-size: clamp(2rem, 4vw, 2.8rem);
-  color: #00aaff;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  margin-bottom: 8px;
-  color: #cfeeff;
-}
-
-input,
-textarea {
-  padding: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
-  font-size: 1rem;
-}
-
-textarea {
-  resize: vertical;
-}
-
-button {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 8px;
-  background-color: #00aaff;
-  color: #ffffff;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #0088cc;
-}
-
-/* Contact links styles */
-.contact-links {
-  display: flex;
-  justify-content: center;
-  gap: 20px; /* Space between icons */
-}
-
-.contact-icon {
-  color: #00aaff; /* Icon color */
-  transition: color 0.3s ease;
-}
-
-.contact-icon:hover {
-  color: #0088cc; /* Change color on hover */
-}
-
-/* Keep main titles on one line, show ellipsis if too long; allow wrap on very small screens */
-.hero-title,
-.about-title,
-.projects-title,
-.skills-title,
-.contact-title,
-h1.title,
-h2.title {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-
-/* utility class for single-line parts (used for the name) */
-.title-nowrap {
-  white-space: nowrap;
-  display: inline-block;
-}
-
-/* Allow wrapping on very small screens to avoid overflow */
-@media (max-width: 420px) {
-  .hero-title,
-  .about-title,
-  .projects-title,
-  .skills-title,
-  .contact-title,
-  .title-nowrap {
-    white-space: normal;
-  }
-}
-
-/* Blue box shadow + subtle animated glow for images */
-.profile-img,
-.project-image {
-  border-radius: 12px;
-  /* main soft blue shadow + subtle outer glow */
   box-shadow:
-    0 10px 30px rgba(0, 34, 85, 0.45),         /* depth shadow (darker) */
-    0 0 40px rgba(0, 170, 255, 0.12),          /* soft blue glow */
-    0 0 120px rgba(0, 170, 255, 0.04) ;        /* faint wide bloom */
+    0 14px 40px rgba(0, 34, 85, 0.40),
+    0 0 50px rgba(0, 170, 255, 0.10);
   transition: transform 0.28s ease, box-shadow 0.28s ease;
-  will-change: transform, box-shadow;
 }
 
-/* stronger effect on hover */
-.profile-img:hover,
-.project-image:hover {
+.profile-img:hover {
   transform: translateY(-6px) scale(1.02);
   box-shadow:
-    0 20px 60px rgba(0, 34, 85, 0.55),
-    0 0 60px rgba(0, 170, 255, 0.18),
-    0 0 160px rgba(0, 170, 255, 0.08);
+    0 28px 70px rgba(0, 34, 85, 0.50),
+    0 0 90px rgba(0, 170, 255, 0.16);
 }
 
-/* optional: pulsing ambient glow for framed photos */
-.photo-frame {
+/* make hero content centered on small screens & image smaller */
+@media (max-width: 880px) {
+  .hero-inner {
+    gap: 20px;
+  }
+  .hero-left {
+    text-align: center;
+  }
+  .hero-right {
+    flex: 0 0 300px;
+  }
+  .profile-img { max-width: 300px; }
+}
+
+@media (max-width: 520px) {
+  .home-hero,
+  .hero-inner {
+    flex-direction: column-reverse; /* text above image on phone */
+    align-items: center;
+    min-height: auto;
+  }
+  .hero-left { text-align: center; }
+  .hero-right { width: 100%; }
+  .profile-img { max-width: 240px; }
+}
+
+/* Navbar responsive polish (ensure mobile menu works and stays above hero) */
+.site-nav {
   position: relative;
-  overflow: visible;
+  z-index: 80;
 }
 
-.photo-frame::after {
-  content: "";
-  position: absolute;
-  inset: 6px; /* sit just inside the frame padding */
-  border-radius: 14px;
-  pointer-events: none;
-  box-shadow: 0 0 40px rgba(0, 170, 255, 0.06);
-  opacity: 0.9;
-  animation: bluePulse 3.6s ease-in-out infinite;
+/* ensure dropdown sits above hero and content */
+.nav-links {
+  transition: max-height 0.28s ease, opacity 0.24s ease, transform 0.28s ease;
 }
 
-/* subtle pulse animation */
-@keyframes bluePulse {
-  0%   { transform: scale(0.98);   box-shadow: 0 0 30px rgba(0,170,255,0.06); }
-  50%  { transform: scale(1.02);   box-shadow: 0 0 70px rgba(0,170,255,0.14); }
-  100% { transform: scale(0.98);   box-shadow: 0 0 30px rgba(0,170,255,0.06); }
+/* mobile specific (keep if not already present) */
+@media (max-width: 768px) {
+  .menu-toggle { display: block; z-index: 90; }
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 10px;
+    right: 10px;
+    background: rgba(2,16,24,0.96);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 18px 50px rgba(0, 6, 20, 0.6);
+  }
+  .nav-links.open { max-height: 420px; opacity: 1; transform: translateY(0); }
+  .nav-links { max-height: 0; opacity: 0; transform: translateY(-6px); overflow: hidden; }
 }
 
-/* make sure small screens keep good contrast */
-@media (max-width: 420px) {
-  .profile-img, .project-image { box-shadow: 0 6px 18px rgba(0,34,85,0.35); }
-}
-
-/* Projects section */
+/* ...existing code... */
 .projects {
   padding: 60px 20px;
   max-width: 1200px;
@@ -776,4 +765,146 @@ h2.title {
   .project-image { height: 160px; }
   .project-body { padding: 14px; }
   .projects-grid { gap: 14px; }
+}
+
+/* Skills section — improved styling */
+.skills {
+  padding: 56px 20px;
+  max-width: 1100px;
+  margin: 0 auto 80px;
+  animation: sectionFade 0.9s ease both;
+}
+
+.skills-title {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  color: #00aaff;
+  text-align: center;
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+
+.skills-desc {
+  color: #cfeeff;
+  text-align: center;
+  max-width: 880px;
+  margin: 0 auto 26px;
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  line-height: 1.6;
+}
+
+/* Grid of skill cards */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+/* Category card */
+.skill-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(0,170,255,0.06);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 12px 32px rgba(0, 18, 40, 0.6);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skill-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 80px rgba(0, 138, 255, 0.12);
+}
+
+.skill-card h4 {
+  color: #9fe6ff;
+  font-size: 1rem;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+/* Badges */
+.skill-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.skill-badge {
+  background: linear-gradient(135deg, rgba(0,170,255,0.12), rgba(0,170,255,0.04));
+  color: #00c3ff;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1px solid rgba(0,170,255,0.08);
+  box-shadow: 0 6px 18px rgba(0,138,255,0.04);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.skill-badge:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 14px 40px rgba(0,138,255,0.08);
+  background: linear-gradient(135deg, rgba(0,170,255,0.20), rgba(0,170,255,0.08));
+}
+
+/* subtle entrance */
+@keyframes skillsPop {
+  from { opacity: 0; transform: translateY(10px) scale(0.995); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.skill-card { animation: skillsPop 0.45s ease both; }
+
+/* Skills — Option A: compact centered chips */
+.skills {
+  padding: 36px 16px;
+  max-width: 1000px;
+  margin: 0 auto 60px;
+}
+
+.skills-title {
+  text-align: center;
+  color: #00aaff;
+  font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+  margin-bottom: 10px;
+}
+
+.skills-desc {
+  text-align: center;
+  color: #cfeeff;
+  margin-bottom: 18px;
+  font-size: 0.98rem;
+}
+
+.skills-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/* compact badges */
+.skill-badge {
+  background: transparent;
+  color: #dff8ff;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,170,255,0.12);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+.skill-badge:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0,170,255,0.08);
+}
+
+/* responsive */
+@media (max-width: 520px) {
+  .skills { padding: 28px 12px; }
+  .skill-badge { padding: 7px 10px; font-size: 0.85rem; }
 }
