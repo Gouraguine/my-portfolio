@@ -567,6 +567,8 @@ section {
 
 /* image style + blue shadow */
 .profile-img {
+  position: relative;
+  margin-top: auto;
   width: 100%;
   max-width: 360px;
   height: auto;

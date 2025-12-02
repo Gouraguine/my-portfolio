@@ -34,7 +34,7 @@ export default function Navbar() {
 
       <div className={`nav-links${isOpen ? " open" : ""}`}>
         <NavLink
-          to="/"
+          to="my-portfolio/"
           end
           className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
           onClick={handleLinkClick}
