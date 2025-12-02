@@ -7,7 +7,7 @@ export default function Home() {
       <section className="home-hero">
          <div className="hero-right">
           <div className="photo-frame">
-            <img src="./assets/profile.jpeg" alt="Profile" className="profile-img" />
+            <img src="https://vast-brown-aaegtinls0-oi5csdxbyr.edgeone.dev/profile.jpeg" alt="Profile" className="profile-img" />
             <div className="photo-overlay" />
           </div>
         </div>
