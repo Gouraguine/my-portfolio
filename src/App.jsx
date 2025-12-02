@@ -10,6 +10,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Navbar />
+      <Home />
       <main>
         <Routes>
           <Route path="my-portfolio/" element={<Home />} />
